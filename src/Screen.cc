@@ -2054,8 +2054,10 @@ void BScreen::placeWindow(BlackboxWindow *win) {
   case WindowTypeDialog: {
     BlackboxWindow *w = win->findTransientFor();
     bt::Rect p = w ? w->frameRect() : usableArea;
-    const int x = static_cast<int>(p.x() + (p.width() - r.width()) / 2);
-    const int y = static_cast<int>(p.y() + (p.height() - r.height()) / 2);
+    const int x = static_cast<int>(p.x() +
+                                   static_cast<int>(p.width() - r.width()) / 2);
+    const int y = static_cast<int>(p.y() +
+                                   static_cast<int>(p.height() - r.height()) / 2);
     r.setPos(x, y);
     break;
   }
