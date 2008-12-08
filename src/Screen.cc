@@ -2116,9 +2116,11 @@ bool BScreen::cascadePlacement(bt::Rect &win,
 bool BScreen::centerPlacement(bt::Rect &rect, const bt::Rect &avail)
 {
   const int x =
-    static_cast<int>(avail.x() + (avail.width() - rect.width()) / 2);
+    static_cast<int>(avail.x() +
+                     static_cast<int>((avail.width() - rect.width())) / 2);
   const int y =
-    static_cast<int>(avail.y() + (avail.height() - rect.height()) / 2);
+    static_cast<int>(avail.y() +
+                     static_cast<int>((avail.height() - rect.height())) / 2);
   rect.setPos(x, y);
   return true;
 }
