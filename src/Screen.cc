@@ -1452,14 +1452,23 @@ bool BScreen::parseMenuFile(FILE *file, Rootmenu *menu) {
     if (! fgets(line, 1024, file))
       continue;
 
-    if (line[0] == '#') // comment, skip it
+    /* Remove the newline character if necessary */
+    if (line[0] != '\0' && line[strlen(line) - 1] == '\n')
+      line[strlen(line) - 1] = '\0';
+
+    size_t pos = 0;
+    size_t line_length = strlen(line);
+
+    for (pos = 0; pos < len; pos++)
+      if (line[pos] != ' ') break;
+
+    if (line[pos] == '#') // comment, skip it
       continue;
 
-    size_t line_length = strlen(line);
     unsigned int key = 0;
 
     // get the keyword enclosed in []'s
-    size_t pos = string_within('[', ']', line, 0, line_length, keyword);
+    pos = string_within('[', ']', line, 0, line_length, keyword);
 
     if (keyword[0] == '\0') {  // no keyword, no menu entry
       continue;
