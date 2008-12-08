@@ -1347,10 +1347,19 @@ void BScreen::InitMenu(void) {
         memset(label, 0, 1024);
 
         while (fgets(line, 1024, menu_file) && ! feof(menu_file)) {
-          if (line[0] == '#')
+          /* Remove the newline character if necessary */
+          if (line[0] != '\0' && line[strlen(line) - 1] == '\n')
+            line[strlen(line) - 1] = '\0';
+
+          int i, len = strlen(line);
+
+          for (i = 0; i < len; i++)
+            if (line[i] != ' ') break;
+
+          if (line[i] == '#')
             continue;
 
-          int i, key = 0, index = -1, len = strlen(line);
+          int key = 0, index = -1;
 
           for (i = 0; i < len; i++) {
             if (line[i] == '[') index = 0;
